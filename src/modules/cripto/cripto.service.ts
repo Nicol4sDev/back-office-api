@@ -8,4 +8,12 @@ export class CriptoService {
         const hash: string = await bcrypt.hash(password,salt);
         return hash;
     }
+
+    async comparePasswords(
+        userInputPassword: string,
+        hashedPassword: string,
+      ){
+        const isMatch: boolean = await bcrypt.compare(userInputPassword, hashedPassword);
+        return isMatch;
+      }
 }
