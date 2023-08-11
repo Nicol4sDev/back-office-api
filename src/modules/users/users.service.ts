@@ -19,8 +19,9 @@ export class UsersService {
     let user : any = {
       id: uuidv4(),
       email: createUserDto.email.toLocaleLowerCase(),
-      password: this.criptoService.encryptPassword(createUserDto.password),
+      password: await this.criptoService.encryptPassword(createUserDto.password),
     }
-    return user = await this.userModel.create(createUserDto)
+    await this.userModel.create(user)
+    return user
   }
 }
