@@ -1,6 +1,19 @@
 version: '3.1'
 
 services:
+  backend:
+    build: ./
+    container_name: nestjs_api
+    environment:
+      - PORT=3000
+      - JWT_SECRET=123
+      - MONGO_URI=mongodb://localhost:27017/back-office-mongo
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    networks:
+      - nestjs_network
   db:
     image: mongo:5
     restart: always
@@ -9,4 +22,10 @@ services:
     environment:
       MONGODB_DATABASE: back-office-mongo
     volumes:
-      - ./mongo:/data/db
+      - './mongodb-backup:/data/db'
+    networks:
+      - nestjs_network
+
+  networks:
+    nestjs_network:
+      driver: bridge
